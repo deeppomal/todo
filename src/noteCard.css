@@ -1,0 +1,33 @@
+.notecard-container{
+    height: 150px;
+    border-radius: 0px 0px 10px 10px;
+    border-width: 4px 0px 0px 0px;
+    border-style: solid;
+    box-shadow: 0px 0px 10px -5px;
+    padding: 20px;
+    background-color: white;
+    width: 20%;
+    margin: 15px;
+}
+.note-title-container{
+    padding: 7px;
+    border-radius: 5px;
+    text-align: center;
+}
+#note-title{
+    font-size: 16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+#note-text{
+    margin-top: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    height: 80px;
+}
+.icons{
+    display: flex;
+    justify-content: end;
+}
+#trash{
+    cursor: pointer;
+}
