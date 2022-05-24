@@ -8,7 +8,6 @@
   flex-direction: column;
 }
 header{
-  /* flex:1; */
   height: 200px;
   background-color: #e9eef6;
   display: flex;
@@ -61,4 +60,22 @@ main{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 20px;
   color: #5c5c5c;
+}
+@media only screen and (max-width: 600px) {
+  .note-list-container {
+    flex-direction: column;
+  }
+  #title2{
+    text-align: center;
+    margin-left: 0px;
+  }
+  #rodal-modal{
+    background-color: red;
+  }
+  .no-task-container p{
+    margin-top: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: #5c5c5c;
+  }
 }

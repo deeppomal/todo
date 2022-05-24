@@ -7,51 +7,52 @@ const Home = () => {
 
     const [isVisible, setIsVisible] = useState(false);
     const [tasks,setTasks]=useState([]);
+    const [selectedTask,setSelectedTask]=useState({});
+    const matches = window.matchMedia("(max-width: 600px)").matches
+
     const show= () => {
         setIsVisible(true)
     }
     const hide= () => {
         setIsVisible(false)
     }
-    const getData=(title,text)=>{
-        var taskObj = {title:title,text:text};
+    const getData=(task)=>{
         var currList = tasks;
-        currList.push(taskObj);
-        setTasks(currList)
-
+        currList.push(task);
+        setTasks(currList);
     }
-
-    const getBgColor=()=>{
-        const bgColor = [{'color1':'#9cbbde','color2':'rgba(237,243,252,255)'},{'color1':'#f4e2b3','color2':'rgba(254,250,243,255)'},
-        {'color1':'#9ddf95','color2':'rgba(243,252,242,255)'},{'color1':'#e6aab7','color2':'rgba(251,240,241,255)'},{'color1':'#d48b4f','color2':'rgba(225,222,214,255)'},
-        {'color1':'#aa5bdd','color2':'rgba(214,210,221,1)'},{'color1':'#d97e8d','color2':'rgba(222,210,212,255)'},{'color1':'#e2c589','color2':'rgba(224,221,214,255)'}];
-    
-        return bgColor[parseInt(Math.random()*8)];
+    const editData=(task)=>{
+        var currList = tasks;
+        let index = currList.findIndex(x=>x.id===task.id)
+        currList[index] = task
+        setTasks(currList);
+        setSelectedTask({})
     }
-    const removeNote =(indexToRemove)=>{
-        let newNotes=tasks.filter((item,index)=>{
-            return index!==indexToRemove
+    const removeNote =(idToRemove)=>{
+        let newNotes=tasks.filter((item)=>{
+            return item.id!==idToRemove
         })
         setTasks(newNotes)
     }
+    const onNoteCardClick=(task)=>{
+        setSelectedTask(task);
+        show();
+    }
     const displayNotes=(tasks)=>{
-        
         let columns = [];
-    
         let notes = [];
-        tasks.map((task,index)=>{
-            columns.push( <NoteCard title={task.title} text={task.text} bgColor={getBgColor()} key={index} removeNote={removeNote} indexOfNote={index} />)
+        tasks.map((task)=>{
+            columns.push( <NoteCard key={task.id} task={task} removeNote={removeNote}  onNoteCardClick={onNoteCardClick} />)
             if(columns.length===4){
-                notes.push(<div className="note-list-container">{columns}</div>);
+                notes.push(<div className="note-list-container" key={task.id}>{columns}</div>);
                 columns=[];
             }
         })
         if(columns.length<4){
-            notes.push(<div className="note-list-container">{columns}</div>);
+            notes.push(<div className="note-list-container" key={columns.length}>{columns}</div>);
         }
         return notes;
     }
-
     return ( 
         <div className="container">
             <header>
@@ -62,14 +63,14 @@ const Home = () => {
                 <p id='title2'>All Tasks</p>
                 {displayNotes(tasks)}
           
-                <Modal isVisible={isVisible} hide={hide} getData={getData} />
-                {tasks.length==0 &&<div className="no-task-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="200px" viewBox="0 0 20 20" width="200px" fill="#c9c6c6"><rect fill="none" height="20" width="20"/><path d="M3,5h9v1.5H3V5z M3,11.25h6v1.5H3V11.25z M3,8.12h9v1.5H3V8.12z M16.78,11.99l0.65-0.65c0.29-0.29,0.29-0.77,0-1.06 l-0.71-0.71c-0.29-0.29-0.77-0.29-1.06,0l-0.65,0.65L16.78,11.99z M16.19,12.58L11.77,17H10v-1.77l4.42-4.42L16.19,12.58z"/></svg>
+                <Modal isVisible={isVisible} hide={hide} getData={getData} editData={editData} selectedTask={selectedTask} />
+                {tasks.length===0 &&<div className="no-task-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" height={matches?"100px":"200px"} viewBox="0 0 20 20" width={matches?"100px":"200px"} fill="#c9c6c6"><rect fill="none" height="20" width="20"/><path d="M3,5h9v1.5H3V5z M3,11.25h6v1.5H3V11.25z M3,8.12h9v1.5H3V8.12z M16.78,11.99l0.65-0.65c0.29-0.29,0.29-0.77,0-1.06 l-0.71-0.71c-0.29-0.29-0.77-0.29-1.06,0l-0.65,0.65L16.78,11.99z M16.19,12.58L11.77,17H10v-1.77l4.42-4.42L16.19,12.58z"/></svg>
                     <p>Tasks you add appear here</p>
                 </div>}
             </main>
         </div>
-     );
+    );
 }
  
 export default Home;
