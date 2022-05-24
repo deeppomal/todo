@@ -6,19 +6,19 @@ import getBgColor from './utils/getColor';
 
 const Modal =({isVisible,hide,getData,editData,selectedTask})=> {
 
-    const [title, setTitle] = useState(selectedTask.title);
-    const [text, setText] = useState(selectedTask.text);
+    const [title, setTitle] = useState('');
+    const [text, setText] = useState('');
     const matches = window.matchMedia("(max-width: 600px)").matches
 
     useEffect(()=>{
         setTitle('');
         setText('');
-        setTitle(selectedTask.title)
-        setText(selectedTask.text)
-    },[selectedTask.title,selectedTask.text])
+        setTitle(selectedTask?.title || '')
+        setText(selectedTask?.text || '')
+    },[selectedTask?.title,selectedTask?.text])
 
     const createTaskID =()=>{
-        let timestamp = +new Date
+        let timestamp = +new Date();
         let rand = parseInt(Math.random() * 1e5);
         let finalNumb = timestamp * rand;
         let string = (Math.random() + 1).toString(36).substring(7)
@@ -39,7 +39,7 @@ const Modal =({isVisible,hide,getData,editData,selectedTask})=> {
             
             hide();
             if(selectedTask?.title)
-                editData({id:selectedTask.id,title,text,bgColor:selectedTask.bgColor})
+                editData({id:selectedTask?.id || '',title,text,bgColor:selectedTask?.bgColor || ''})
             else
                 getData({id:createTaskID(),title,text,bgColor:getBgColor()})    
                 
